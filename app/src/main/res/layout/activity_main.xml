@@ -7,6 +7,6 @@
     android:layout_height="match_parent"
     tools:context="com.cahyautama.popularmovie1.MainActivity">
 
-    
+
 
 </android.support.constraint.ConstraintLayout>
