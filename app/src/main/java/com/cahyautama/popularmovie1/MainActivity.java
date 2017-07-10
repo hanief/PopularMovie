@@ -1,11 +1,15 @@
 package com.cahyautama.popularmovie1;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import java.util.List;
@@ -23,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements MoviesGridAdapter
     private Config config;
     public Retrofit retrofit;
     private MoviesGridAdapter adapter;
+    private MovieDBService movieDBService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +43,6 @@ public class MainActivity extends AppCompatActivity implements MoviesGridAdapter
 
         config = new Config(this);
 
-        connectAndGetApiData();
-    }
-
-    public static final String TAG = MainActivity.class.getSimpleName();
-
-    public void connectAndGetApiData(){
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -51,8 +50,48 @@ public class MainActivity extends AppCompatActivity implements MoviesGridAdapter
                     .build();
         }
 
-        MovieDBService movieDBService = retrofit.create(MovieDBService.class);
-        Call<MovieResponse> call = movieDBService.getTopRatedMovies(config.apiKey);
+        movieDBService = retrofit.create(MovieDBService.class);
+
+        connectAndGetApiData();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.sort_popular:
+                fetchMoviesByPopularity();
+                return true;
+            case R.id.sort_top_rated:
+                fetchMoviesByTopRated();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public static final String TAG = MainActivity.class.getSimpleName();
+
+    void fetchMoviesByPopularity() {
+        fetchMovies(movieDBService.getPopularMovies(config.apiKey));
+
+        setTitle("Popular Movies");
+    }
+
+    void fetchMoviesByTopRated() {
+        fetchMovies(movieDBService.getTopRatedMovies(config.apiKey));
+
+        setTitle("Top Rated Movies");
+    }
+
+    void fetchMovies(Call<MovieResponse> call) {
         call.enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
@@ -61,8 +100,6 @@ public class MainActivity extends AppCompatActivity implements MoviesGridAdapter
                 adapter.movies = movies;
 
                 recyclerView.setAdapter(adapter);
-
-                Log.d(TAG, "Number of movies received: " + movies.size());
             }
             @Override
             public void onFailure(Call<MovieResponse> call, Throwable throwable) {
@@ -71,8 +108,20 @@ public class MainActivity extends AppCompatActivity implements MoviesGridAdapter
         });
     }
 
+    public void connectAndGetApiData(){
+        fetchMoviesByPopularity();
+    }
+
     @Override
     public void onItemClick(View view, int position) {
+        Context context = MainActivity.this;
+        Class movieDetailActivity = MovieDetailActivity.class;
+
+        Intent showMovieDetail = new Intent(this, movieDetailActivity);
+        Movie selectedMovie = adapter.movies.get(position);
+        showMovieDetail.putExtra("movie", selectedMovie);
+        startActivity(showMovieDetail);
+
         Log.d(TAG, "Item clicked at position: " + position);
     }
 }

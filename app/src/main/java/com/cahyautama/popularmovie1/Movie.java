@@ -1,14 +1,18 @@
 package com.cahyautama.popularmovie1;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 
 /**
  * Created by hanief on 10/07/2017.
  */
 
-public class Movie {
+public class Movie implements Parcelable {
 
     @SerializedName("vote_count")
     @Expose
@@ -52,6 +56,48 @@ public class Movie {
     @SerializedName("release_date")
     @Expose
     private String releaseDate;
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeFloat(voteAverage);
+        dest.writeString(title);
+        dest.writeFloat(popularity);
+        dest.writeString(posterPath);
+        dest.writeString(originalLanguage);
+        dest.writeString(originalTitle);
+        dest.writeString(backdropPath);
+        dest.writeString(overview);
+        dest.writeString(releaseDate);
+    }
+
+    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
+
+    private Movie(Parcel in) {
+        id = in.readInt();
+        voteAverage = in.readFloat();
+        title = in.readString();
+        popularity = in.readFloat();
+        posterPath = in.readString();
+        originalLanguage = in.readString();
+        originalTitle = in.readString();
+        backdropPath = in.readString();
+        overview = in.readString();
+        releaseDate = in.readString();
+    }
 
     public int getVoteCount() {
         return voteCount;

@@ -1,9 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.cahyautama.popularmovie1.MovieDetailActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/movie_title_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:layout_gravity="left|center_vertical"
+        android:background="@color/colorPrimaryDark"
+        android:text="Movie Title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:orientation="horizontal"
+        android:padding="15dp" >
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:id="@+id/movie_image_view"
+            android:layout_gravity="left|top"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2015"
+                android:id="@+id/movie_release_date"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="8.1/10"
+                android:id="@+id/movie_vote_average"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:id="@+id/movie_synopsis"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:text="Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet."/>
+</LinearLayout>
