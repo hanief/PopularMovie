@@ -2,6 +2,8 @@ package com.cahyautama.popularmovie1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -52,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements MoviesGridAdapter
 
         movieDBService = retrofit.create(MovieDBService.class);
 
-        connectAndGetApiData();
+        fetchMoviesByPopularity();
     }
 
     @Override
@@ -77,16 +80,32 @@ public class MainActivity extends AppCompatActivity implements MoviesGridAdapter
         }
     }
 
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
     public static final String TAG = MainActivity.class.getSimpleName();
 
     void fetchMoviesByPopularity() {
-        fetchMovies(movieDBService.getPopularMovies(config.apiKey));
+        if (isOnline()) {
+            fetchMovies(movieDBService.getPopularMovies(config.apiKey));
+        } else {
+            Toast.makeText(this, "Network not available. Try again later.", Toast.LENGTH_SHORT).show();
+        }
 
         setTitle("Popular Movies");
     }
 
     void fetchMoviesByTopRated() {
-        fetchMovies(movieDBService.getTopRatedMovies(config.apiKey));
+        if (isOnline()) {
+            fetchMovies(movieDBService.getTopRatedMovies(config.apiKey));
+        } else {
+            Toast toast = Toast.makeText(this, "Network not available. Try again later.", Toast.LENGTH_SHORT);
+            toast.show();
+        }
 
         setTitle("Top Rated Movies");
     }
@@ -108,13 +127,8 @@ public class MainActivity extends AppCompatActivity implements MoviesGridAdapter
         });
     }
 
-    public void connectAndGetApiData(){
-        fetchMoviesByPopularity();
-    }
-
     @Override
     public void onItemClick(View view, int position) {
-        Context context = MainActivity.this;
         Class movieDetailActivity = MovieDetailActivity.class;
 
         Intent showMovieDetail = new Intent(this, movieDetailActivity);
