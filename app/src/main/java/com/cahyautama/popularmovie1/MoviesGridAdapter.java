@@ -19,27 +19,26 @@ import java.util.List;
 public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.MovieViewHolder> {
 
     public List<Movie> movies;
-    private LayoutInflater mInflater;
-    private ItemClickListener mClickListener;
+    private LayoutInflater layoutInflater;
+    private ItemClickListener itemClickListener;
     private Context context;
     public static final String IMAGE_URL_BASE_PATH="http://image.tmdb.org/t/p/w185/";
 
-    // data is passed into the constructor
     public MoviesGridAdapter(Context context, List<Movie> movies) {
-        this.mInflater = LayoutInflater.from(context);
+        this.layoutInflater = LayoutInflater.from(context);
         this.movies = movies;
         this.context = context;
     }
 
     public MoviesGridAdapter(Context context) {
-        this.mInflater = LayoutInflater.from(context);
+        this.layoutInflater = LayoutInflater.from(context);
         this.context = context;
     }
 
     // inflates the cell layout from xml when needed
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.grid_movie, parent, false);
+        View view = layoutInflater.inflate(R.layout.grid_movie, parent, false);
         MovieViewHolder movieViewHolder = new MovieViewHolder(view);
 
         return movieViewHolder;
@@ -76,7 +75,7 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+            if (itemClickListener != null) itemClickListener.onItemClick(view, getAdapterPosition());
         }
     }
 
@@ -87,7 +86,7 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
 
     // allows clicks events to be caught
     public void setClickListener(ItemClickListener itemClickListener) {
-        this.mClickListener = itemClickListener;
+        this.itemClickListener = itemClickListener;
     }
 
     // parent activity will implement this method to respond to click events
