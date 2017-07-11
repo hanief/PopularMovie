@@ -24,8 +24,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
 
-        setTitle("Movie Detail");
-
         movieTitleView = (TextView) findViewById(R.id.movie_title_view);
         movieReleaseDateView = (TextView) findViewById(R.id.movie_release_date);
         movieVoteView = (TextView) findViewById(R.id.movie_vote_average);
