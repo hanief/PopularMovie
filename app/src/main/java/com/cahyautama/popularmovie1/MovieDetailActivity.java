@@ -8,14 +8,17 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MovieDetailActivity extends AppCompatActivity {
 
     private Movie movie;
-    private TextView movieTitleView;
-    private ImageView moviePosterView;
-    private TextView movieReleaseDateView;
-    private TextView movieVoteView;
-    private TextView movieSynopsisView;
+    @BindView(R.id.movie_title_view) TextView movieTitleView;
+    @BindView(R.id.movie_image_view) ImageView moviePosterView;
+    @BindView(R.id.movie_release_date) TextView movieReleaseDateView;
+    @BindView(R.id.movie_vote_average) TextView movieVoteView;
+    @BindView(R.id.movie_synopsis) TextView movieSynopsisView;
 
     public static final String IMAGE_URL_BASE_PATH="http://image.tmdb.org/t/p/w185/";
 
@@ -24,11 +27,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
 
-        movieTitleView = (TextView) findViewById(R.id.movie_title_view);
-        movieReleaseDateView = (TextView) findViewById(R.id.movie_release_date);
-        movieVoteView = (TextView) findViewById(R.id.movie_vote_average);
-        movieSynopsisView = (TextView) findViewById(R.id.movie_synopsis);
-        moviePosterView = (ImageView) findViewById(R.id.movie_image_view);
+        ButterKnife.bind(this);
 
         Intent intent = getIntent();
         movie = intent.getParcelableExtra("movie");
