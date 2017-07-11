@@ -8,7 +8,7 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:context="com.cahyautama.popularmovie1.MovieDetailActivity">
 
@@ -16,25 +16,26 @@
             android:id="@+id/movie_title_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:layout_gravity="left|center_vertical"
+            android:padding="@dimen/padding_content"
+            android:layout_gravity="start|center_vertical"
             android:background="@color/colorPrimaryDark"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="@color/colorWhite"
             android:textStyle="bold"
-            tools:text="Movie Title"/>
+            tools:text="Spider-Man: Homecoming"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:orientation="horizontal"
-            android:padding="15dp" >
+            android:padding="@dimen/padding_content" >
 
             <ImageView
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
                 android:id="@+id/movie_image_view"
-                android:layout_gravity="start|top"/>
+                android:layout_gravity="start|top"
+                android:contentDescription="@string/movie_poster_description"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -46,13 +47,13 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/movie_release_date"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                    tools:text="2015"/>
+                    tools:text="2017-07-05"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/movie_vote_average"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    tools:text="8.1/10"/>
+                    tools:text="7.4/10"/>
             </LinearLayout>
 
 
@@ -61,9 +62,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
+            android:padding="@dimen/padding_content"
             android:id="@+id/movie_synopsis"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            tools:text="Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet."/>
+            tools:text="Following the events of Captain America: Civil War, Peter Parker, with the help of his mentor Tony Stark, tries to balance his life as an ordinary high school student in Queens, New York City, with fighting crime as his superhero alter ego Spider-Man as a new threat, the Vulture, emerges."/>
     </LinearLayout>
 </ScrollView>
